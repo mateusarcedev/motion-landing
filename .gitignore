@@ -1,0 +1,19 @@
+node_modules/
+.DS_Store
+*.log
+.vercel/
+__pycache__/
+*.pyc
+
+# Render outputs and QA results are never tracked (regenerated locally).
+# site/ is the published website and IS tracked, including its media.
+/out/
+/entrega-*.zip
+/reviews/**/*.png
+/reviews/**/*.jpg
+/reviews/**/*.jpeg
+/reviews/**/*.webp
+/reviews/**/*.gif
+/reviews/**/*.mp4
+/reviews/**/*.webm
+/reviews/**/*.html
