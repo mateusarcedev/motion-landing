@@ -112,6 +112,29 @@ p{color:var(--fg-dim)}
 .vid{aspect-ratio:9/16;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#000}
 .vid video{width:100%;height:100%;object-fit:cover}
 
+/* install */
+.install{display:grid;grid-template-columns:minmax(0,1fr);gap:26px;padding:28px;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.install>*{min-width:0}
+.install .tag{margin-bottom:14px}
+.cmdbox{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);overflow-x:auto}
+.cmdbox .prompt{color:var(--mint);font:600 18px/1 var(--mono)}
+.cmdbox code{flex:1;font:600 clamp(14px,2.2vw,20px)/1.4 var(--mono);color:var(--fg);white-space:nowrap;user-select:all}
+.copy{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--line);color:var(--fg-dim);font:600 12px/1 var(--mono);cursor:pointer;flex:none;transition:border-color .15s,color .15s}
+.copy:hover{border-color:var(--mint-edge);color:var(--fg)}
+.copy.done{border-color:var(--mint-edge);color:var(--mint)}
+.hint{margin-top:12px;font-size:13px;color:var(--fg-dim)}
+.inst-steps{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;counter-reset:s;max-width:none;width:100%}
+.inst-steps li{padding:16px;border:1px solid var(--line-soft);border-radius:var(--radius-sm);background:var(--bg-soft);display:flex;flex-direction:column;gap:6px}
+.inst-steps b{color:var(--fg);font-size:14px;font-weight:600}
+.inst-steps b::before{content:counter(s,decimal-leading-zero) "  ";counter-increment:s;color:var(--mint)}
+.inst-steps li>span{font-size:13px;line-height:1.55;color:var(--fg-dim)}
+.agents,.next{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-size:12px}
+.agents-label{color:var(--fg-faint);letter-spacing:.04em;margin-right:4px}
+.chip,.next code{padding:4px 10px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--bg-soft);color:var(--fg);font:500 12px/1.4 var(--mono)}
+.agents-note{flex-basis:100%;color:var(--fg-faint)}
+.next-doc{margin-left:auto;color:var(--mint)}
+.next-doc:hover{text-decoration:underline}
+@media (max-width:768px){.inst-steps{grid-template-columns:minmax(0,1fr)}.install{padding:18px}.cmdbox{flex-wrap:wrap;overflow-x:visible}.cmdbox code{flex:1 1 calc(100% - 34px);white-space:normal;overflow-wrap:anywhere;font-size:15px}.copy{flex:1 1 100%;justify-content:center;height:40px}.next-doc{margin-left:0;flex-basis:100%}}
 /* editor (nle) */
 .nle-main{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:16px 16px 12px}
 .nle-side{display:flex;flex-direction:column;min-width:0}
@@ -499,20 +522,53 @@ footer{max-width:var(--maxw);margin:0 auto;padding:28px var(--gut) 40px;display:
   <div class="sec-head"><span class="sec-num">01</span><span class="sec-title"><span lang="pt-BR">instalação &amp; uso</span><span lang="en">quick install</span></span><span class="sec-rule"></span><span class="sec-count">CLI</span></div>
   <div class="intro rv">
     <h2><span lang="pt-BR">Instale, use, estude e adapte.</span><span lang="en">Install, run, study and adapt.</span></h2>
-    <p class="lead"><span lang="pt-BR">Sem assinaturas, planos ou lock-in comercial. Pacotes npm modulares e abertos para rodar em qualquer projeto ou agente de IA.</span><span lang="en">No subscriptions, pricing plans or commercial lock-in. Modular open-source npm packages to run inside your projects or with AI agents.</span></p>
+    <p class="lead"><span lang="pt-BR">Sem assinaturas, planos ou lock-in comercial. Um comando instala o CLI, o Core e as 11 Skills oficiais no seu projeto.</span><span lang="en">No subscriptions, pricing plans or commercial lock-in. One command installs the CLI, the Core and the 11 official Skills in your project.</span></p>
   </div>
-  <div class="card rv" style="font-family:var(--mono);padding:24px;background:var(--surface);border-radius:var(--radius);overflow-x:auto;border:1px solid var(--line);">
-    <div style="color:var(--mint);font-size:11px;margin-bottom:12px;padding:6px 10px;background:rgba(16,185,129,0.08);border:1px solid var(--mint-edge);border-radius:4px;display:inline-block;">
-      <span lang="pt-BR">ℹ️ Pacotes npm em Release Candidate (v1.0.0-rc.4), publicados no escopo @technomanceer.</span>
-      <span lang="en">ℹ️ NPM packages in Release Candidate (v1.0.0-rc.4), published under the @technomanceer scope.</span>
+  <div class="install rv">
+    <div>
+      <span class="tag"><span lang="pt-BR">v1.0.0 · estável</span><span lang="en">v1.0.0 · stable</span></span>
+      <div class="cmdbox">
+        <span class="prompt" aria-hidden="true">$</span>
+        <code id="installcmd">npx @technomanceer/<wbr>motion-studio init</code>
+        <button class="copy" type="button" id="copycmd" data-pt="copiar" data-en="copy" data-done-pt="copiado" data-done-en="copied" aria-label="Copiar comando de instalação">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+          <span class="copy-label">copiar</span>
+        </button>
+      </div>
+      <p class="hint"><span lang="pt-BR">Rode na raiz do projeto. Instalação local e idempotente: nada global, nada sobrescrito.</span><span lang="en">Run it at the project root. Local and idempotent: nothing global, nothing overwritten.</span></p>
     </div>
-    <div style="color:var(--fg-dim);font-size:12px;margin-bottom:8px;">@@# 1. Instalar pacotes abertos (npm, escopo @technomanceer)::# 1. Install open packages (npm, @technomanceer scope)@@</div>
-    <div style="color:var(--mint);font-size:14px;line-height:1.6;">npm install -D @technomanceer/motion-cli @technomanceer/motion-core @technomanceer/motion-studio-skills</div>
-    <div style="color:var(--fg-dim);font-size:12px;margin:14px 0 8px;">@@# 2. Inicializar estúdio com perfil seletivo de skills (core, web, motion, social, 3d, interactive, all)::# 2. Initialize studio with selective skill profile (core, web, motion, social, 3d, interactive, all)@@</div>
-    <div style="color:var(--mint);font-size:14px;line-height:1.6;">npx motion init --brand="MinhaMarca" --profile=core</div>
-    <div style="color:var(--fg-dim);font-size:12px;margin:14px 0 8px;">@@# 3. Diagnóstico e criação de entregáveis reais a partir de código::# 3. Environment diagnosis and real code-driven deliverable scaffolding@@</div>
-    <div style="color:var(--mint);font-size:14px;line-height:1.6;">npx motion doctor &amp;&amp; npx motion create carousel post-lancamento</div>
+    <ol class="inst-steps">
+      <li><b><span lang="pt-BR">Instala</span><span lang="en">Installs</span></b><span><span lang="pt-BR">CLI, Core e Skills em versões exatas, sem scripts de terceiros.</span><span lang="en">CLI, Core and Skills at exact versions, with no third-party scripts.</span></span></li>
+      <li><b><span lang="pt-BR">Integra</span><span lang="en">Integrates</span></b><span><span lang="pt-BR">As 11 Skills oficiais ficam em .agents/skills e .claude/skills.</span><span lang="en">The 11 official Skills land in .agents/skills and .claude/skills.</span></span></li>
+      <li><b><span lang="pt-BR">Verifica</span><span lang="en">Verifies</span></b><span><span lang="pt-BR">Confere o sha256 de cada Skill e diagnostica Node, FFmpeg e Chromium.</span><span lang="en">Checks every Skill's sha256 and diagnoses Node, FFmpeg and Chromium.</span></span></li>
+    </ol>
+    <div class="agents">
+      <span class="agents-label"><span lang="pt-BR">descoberta testada em</span><span lang="en">discovery tested on</span></span>
+      <span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">OpenCode</span><span class="chip">Antigravity</span>
+      <span class="agents-note"><span lang="pt-BR">Gemini CLI e GitHub Copilot: caminhos documentados, ainda não testados.</span><span lang="en">Gemini CLI and GitHub Copilot: documented paths, not tested yet.</span></span>
+    </div>
+    <div class="next">
+      <span class="agents-label"><span lang="pt-BR">depois</span><span lang="en">then</span></span>
+      <code>npx motion doctor</code><code>npx motion create video meu-filme</code>
+      <a class="next-doc" href="https://github.com/mateusarcedev/motion-studio/blob/main/docs/INSTALLATION.md" target="_blank" rel="noopener"><span lang="pt-BR">requisitos e solução de problemas ↗</span><span lang="en">requirements and troubleshooting ↗</span></a>
+    </div>
   </div>
+  <script>
+  (function(){
+    var btn=document.getElementById('copycmd'),cmd=document.getElementById('installcmd');
+    if(!btn||!cmd)return;
+    var en=function(){return document.documentElement.lang==='en'};
+    var label=btn.querySelector('.copy-label');
+    var idle=function(){label.textContent=en()?btn.dataset.en:btn.dataset.pt;btn.classList.remove('done')};
+    idle();
+    btn.addEventListener('click',function(){
+      var text=cmd.textContent.trim();
+      var ok=function(){label.textContent=en()?btn.dataset.doneEn:btn.dataset.donePt;btn.classList.add('done');setTimeout(idle,1800)};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(ok,function(){sel()})}else{sel()}
+      function sel(){var r=document.createRange();r.selectNodeContents(cmd);var g=getSelection();g.removeAllRanges();g.addRange(r)}
+    });
+  })();
+  </script>
 </section>
 
 <section id="formats">
