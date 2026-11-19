@@ -17,3 +17,5 @@ __pycache__/
 /reviews/**/*.mp4
 /reviews/**/*.webm
 /reviews/**/*.html
+.vercel
+.env*
