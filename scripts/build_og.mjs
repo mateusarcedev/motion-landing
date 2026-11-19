@@ -1,7 +1,7 @@
-import { chromium } from '/home/mateusarcedev/projetos/motion/node_modules/playwright-core/index.mjs';
+import { chromium } from 'playwright-core';
 import fs from 'fs'; import path from 'path'; import { pathToFileURL } from 'url';
-const dir = path.dirname(new URL(import.meta.url).pathname);
-const tpl = fs.readFileSync(dir + '/og.html', 'utf8');
+const dir = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+const tpl = fs.readFileSync(dir + '/src/og.html', 'utf8');
 const variants = { pt: ['Código que vira <em>cinema.</em>', 'frame-driven · determinístico'], en: ['Code that becomes <em>cinema.</em>', 'frame-driven · deterministic'] };
 const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1200, height: 630 } });
 for (const [k, [h, t]] of Object.entries(variants)) {

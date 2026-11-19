@@ -2,10 +2,12 @@ import { chromium } from "playwright-core";
 import { createServer } from "node:http";
 import { readFile, stat, mkdir } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 
-const SITE_DIR = path.resolve("projects/motion-landing/site");
-const OUT_DIR = path.resolve("projects/motion-landing/reviews/fixes");
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const SITE_DIR = path.join(ROOT, "site");
+const OUT_DIR = path.join(ROOT, "reviews/fixes");
 await mkdir(OUT_DIR, { recursive: true });
 
 async function resolveChrome() {

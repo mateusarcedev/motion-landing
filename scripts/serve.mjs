@@ -2,9 +2,11 @@ import { createServer } from "node:http";
 import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const PORT = 3388;
-const SITE_DIR = path.resolve("projects/motion-landing/site");
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const SITE_DIR = path.join(ROOT, "site");
 
 const mimeTypes = {
   html: "text/html; charset=utf-8",

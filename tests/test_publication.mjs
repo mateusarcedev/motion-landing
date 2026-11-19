@@ -6,7 +6,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, request } from "playwright-core";
 
-const landingDir = path.dirname(fileURLToPath(import.meta.url));
+const landingDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const siteDir = path.join(landingDir, "site");
 const screenshotDir = path.join(landingDir, "reviews/publication");
 let baseUrl;

@@ -1,0 +1,14 @@
+{
+  "name": "motion-landing",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "build:og": "node scripts/build_og.mjs",
+    "serve": "node scripts/serve.mjs",
+    "test": "node tests/test_frontend.mjs && node tests/test_gallery.mjs && node tests/test_publication.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.64.1"
+  }
+}

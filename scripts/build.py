@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Gera site/index.html (pt-BR) e site/en/index.html (en) a partir de page.template.html com foco 100% open-source e avatares do GitHub."""
-import re, pathlib, html
-from gallery_data import render_gallery_html
+import re, pathlib, html, sys
 
-ROOT = pathlib.Path(__file__).parent
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+SRC = ROOT / "src"
+sys.path.insert(0, str(SRC))
+from gallery_data import render_gallery_html  # noqa: E402
+
 SITE = ROOT / "site"
 URL = "https://motion.mateusarce.dev"
 GH = "https://github.com/mateusarcedev/motion-studio"
 
-WAVE = (ROOT / "wave.txt").read_text().strip()
+WAVE = (SRC / "wave.txt").read_text().strip()
 
 # Catálogo completo do ecossistema e repositórios open-source
 ECOSYSTEM = [
@@ -277,7 +280,7 @@ def head(lang):
 <link rel="preload" href="/fonts/GeistMono.woff" as="font" type="font/woff" crossorigin>'''
 
 def build(lang):
-    s = (ROOT / "page.template.html").read_text()
+    s = (SRC / "page.template.html").read_text()
     drop = "en" if lang == "pt-BR" else "pt-BR"
     cred, n = credits_html(lang)
     gallery = render_gallery_html(lang)
@@ -331,7 +334,7 @@ def case_head(lang):
 <link rel="preload" href="/fonts/GeistMono.woff" as="font" type="font/woff" crossorigin>'''
 
 def build_case(lang):
-    s = (ROOT / "case.template.html").read_text()
+    s = (SRC / "case.template.html").read_text()
     drop = "en" if lang == "pt-BR" else "pt-BR"
     s = re.sub(rf'<span lang="{drop}"[^>]*>.*?</span>', "", s, flags=re.S)
     s = re.sub(r"@@(.*?)::(.*?)@@", lambda m: m.group(1 if lang == "pt-BR" else 2), s)
@@ -381,7 +384,7 @@ def case_state_machines_head(lang):
 <link rel="preload" href="/fonts/GeistMono.woff" as="font" type="font/woff" crossorigin>'''
 
 def build_state_machines_case(lang):
-    s = (ROOT / "case-state-machines.template.html").read_text()
+    s = (SRC / "case-state-machines.template.html").read_text()
     drop = "en" if lang == "pt-BR" else "pt-BR"
     s = re.sub(rf'<span lang="{drop}"[^>]*>.*?</span>', "", s, flags=re.S)
     s = re.sub(r"@@(.*?)::(.*?)@@", lambda m: m.group(1 if lang == "pt-BR" else 2), s)
