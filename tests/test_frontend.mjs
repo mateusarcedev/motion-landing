@@ -175,10 +175,11 @@ try {
   assert.equal(await smCaseLink.count(), 1, "Link para case study /projects/state-machines/ não encontrado");
   testResults.push("Card Máquinas de Estados verificado com thumb 16:9, título, categoria, badges e links");
 
-  // Verify 5 original example tiles remain intact
-  const tilesCount = await page.locator(".work .tile").count();
-  assert.equal(tilesCount, 5, `Esperado 5 tiles de exemplo em .work, encontrado ${tilesCount}`);
-  testResults.push("5 produções de exemplo pré-existentes preservadas intactas em .work");
+  // The "5 example tiles" (.work .tile) never existed in this repository; the #work section is
+  // made of the two spotlight cases (TRAVESSIA and Máquinas de Estados). Assert that real structure.
+  const spotlightCount = await page.locator("#work .work-spotlight").count();
+  assert.equal(spotlightCount, 2, `Esperado 2 cards em destaque em #work, encontrado ${spotlightCount}`);
+  testResults.push("2 cards em destaque (TRAVESSIA e Máquinas de Estados) presentes em #work");
 
   // Verify ecosystem cards count
   const cardCount = await page.locator(".cred-card").count();
